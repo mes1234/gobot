@@ -1,0 +1,11 @@
+[Unit]
+Description=NATS service
+
+[Service]
+User=root
+ExecStart=nats-server -m 8222
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
