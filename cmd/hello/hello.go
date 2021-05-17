@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"log"
 	"os"
 	"time"
 
@@ -10,10 +10,37 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
+type PingPonger struct {
+	I string
+}
+
+func (pp *PingPonger) Other() string {
+	if pp.I == "ping" {
+		return "pong"
+	} else {
+		return "ping"
+	}
+}
+
+func pingpong(pingpong PingPonger, nc *nats.Conn) {
+	log.Printf("Hello I am %v", pingpong.I)
+	if pingpong.I == "ping" {
+		log.Printf("published to %v", pingpong.I)
+		nc.Publish(pingpong.I, []byte(pingpong.I))
+	}
+	log.Printf("I will start to listen to to %v", pingpong.Other())
+	nc.Subscribe(pingpong.Other(), func(m *nats.Msg) {
+		fmt.Printf("Received a message: %s\n", string(m.Data))
+		nc.Publish(pingpong.I, []byte(pingpong.Other()))
+		time.Sleep(1 * time.Second)
+	})
+	sleep()
+}
+
 func main() {
 
 	parser := argparse.NewParser("flags", "Ping Pong tool for NATS connectivity")
-	subscriberFlag := parser.Flag("v", "verbose", &argparse.Options{Help: "Enable subcriber mode"})
+	pingPong := parser.String("p", "pingpong", &argparse.Options{Help: "Are you ping or pong"})
 	serverAddr := parser.String("s", "server", &argparse.Options{Required: true, Help: "server address is requried"})
 
 	// Parse input
@@ -27,27 +54,16 @@ func main() {
 
 	// Connect to a server
 	nc, _ := nats.Connect(*serverAddr)
-	defer nc.Drain()
-	defer nc.Close()
+	// defer nc.Drain()
+	// defer nc.Close()
 
-	if *subscriberFlag {
-		// Simple Async Subscriber
-		fmt.Printf("Start reciving")
-		nc.Subscribe("pingpong", func(m *nats.Msg) {
-			fmt.Printf("Received a message: %s\n", string(m.Data))
-		})
-		sleep()
-
-	} else {
-		rand.Seed(time.Now().UnixNano())
-		seed := rand.Intn(300)
-		for i := 0; i < 10; i++ {
-			msg := fmt.Sprintf("Sent a message: %s, seed %d, : count %d/10\n", "Yello", seed, i+1)
-			fmt.Print(msg)
-			nc.Publish("pingpong", []byte(msg))
-		}
+	switch *pingPong {
+	case "ping":
+		go pingpong(PingPonger{I: "ping"}, nc)
+	case "pong":
+		go pingpong(PingPonger{I: "pong"}, nc)
 	}
-
+	sleep()
 }
 
 func sleep() {

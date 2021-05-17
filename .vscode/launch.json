@@ -17,7 +17,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${file}",
-            "args": ["v","-s","nats://raspberrypi.local:4222"]
+            "args": ["-p","ping","-s","nats://raspberrypi.local:4222"]
         }
     ]
 }
