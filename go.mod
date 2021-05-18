@@ -7,4 +7,5 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/nats-io/nats-server/v2 v2.2.4 // indirect
 	github.com/nats-io/nats.go v1.11.0
+	github.com/warthog618/gpiod v0.6.0 // indirect
 )
