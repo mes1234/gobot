@@ -1,0 +1,80 @@
+
+body {
+    background: rgb(199, 38, 38);
+}
+
+.actor {
+    stroke: #CCCCFF;
+    fill: #4c4cb4;
+}
+text.actor {
+    fill:black;
+    stroke:none;
+    font-family: Helvetica;
+}
+
+.actor-line {
+    stroke:grey;
+}
+
+.messageLine0 {
+    stroke-width:1.5;
+    stroke-dasharray: "2 2";
+    marker-end:"url(#arrowhead)";
+    stroke:rgb(190, 35, 35);
+}
+
+.messageLine1 {
+    stroke-width:1.5;
+    stroke-dasharray: "2 2";
+    stroke:black;
+}
+
+#arrowhead {
+    fill:rgb(214, 13, 13);
+
+}
+
+.messageText {
+    fill:black;
+    stroke:none;
+    font-family: 'trebuchet ms', verdana, arial;
+    font-size:140px;
+}
+
+.labelBox {
+    stroke: #CCCCFF;
+    fill: #ECECFF;
+}
+
+.labelText {
+    fill:black;
+    stroke:none;
+    font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopText {
+    fill:black;
+    stroke:none;
+    font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopLine {
+    stroke-width:2;
+    stroke-dasharray: "2 2";
+    marker-end:"url(#arrowhead)";
+    stroke: #CCCCFF;
+}
+
+.note {
+    stroke: #decc93;
+    stroke: #CCCCFF;
+    fill: #fff5ad;
+}
+
+.noteText {
+    fill:black;
+    stroke:none;
+    font-family: 'trebuchet ms', verdana, arial;
+    font-size:14px;
+}

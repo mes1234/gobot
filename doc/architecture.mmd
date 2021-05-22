@@ -1,0 +1,19 @@
+stateDiagram-v2
+
+   state MotorStream {
+        MotorStream.1  note left of MotorStream.1 : sint[-100-100]
+        MotorStream.2  note left of MotorStream.2 : sint[-100-100]
+    } 
+
+   
+
+   state Motor.1 {
+        Speed.1 
+    }
+    MotorStream.1 --> Speed.1
+
+
+    state Motor.2 {
+        Speed.2  
+    }
+    MotorStream.2 --> Speed.2

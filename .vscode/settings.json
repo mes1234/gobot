@@ -1,4 +1,6 @@
 {
     "go.useLanguageServer": true,
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+     "mermaid.theme": "null",
+     "mermaid.themeCSS": "style.css"
 }
